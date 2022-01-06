@@ -19,6 +19,53 @@ add_action( 'woocommerce_add_order_item_meta','wishlist_woocommerce_add_values_t
 //add_action( 'woocommerce_order_status_cancelled', 'wishlist_woocommerce_payment_complete_status_cancelled' );
 
 
+add_action( 'yith_wcwl_after_wishlist_form','wishlist_woocommerce_yith_wcwl_after_wishlist_form',15,1);
+
+
+function wishlist_woocommerce_yith_wcwl_after_wishlist_form($wishlist){
+	//print_r( $wishlist, true );
+
+	if (current_user_can('manage_options')) {
+
+		$items = $wishlist->get_items();
+		?>
+		<h5>Administración</h5>
+		<a href="javascript:export_wishlist();">Exportar lista.</a>
+		<script>
+			function export_wishlist(){
+				var w = window.open('', 'export<?php echo $wishlist->get_token() ?>');
+				var content = "";
+				
+				// header
+				content = "<table border=1><thead><tr><th>Id Usuario</th><th>Wishlist token</th><th>Id Producto</th><th>Nombre Prodcuto</th></tr></thead><tbody>";
+				
+				<?php
+					// products on wihslist
+					foreach ( $items as $item ) {
+						$product = $item->get_product();
+						
+						echo "content += '<tr>" 
+							. "<td>". htmlentities ( $wishlist->get_user_id() ) ."</td>" 
+							. "<td>". htmlentities ( $wishlist->get_token() ) ."</td>" 
+							. "<td>". htmlentities ( $product->get_id() ) ."</td>" 
+							. "<td>". htmlentities ( $product->get_name() ) ."</td>" 
+						."</tr>';";
+
+					}
+
+				?>	
+				content += "</tbody></table>";
+				w.document.body.innerHTML = content;
+			}
+		</script>
+		<?php
+	}
+	else {
+	}
+}
+
+
+
 /* Log to File
  */
 function wishlist_woocommerce_log_to_file( )

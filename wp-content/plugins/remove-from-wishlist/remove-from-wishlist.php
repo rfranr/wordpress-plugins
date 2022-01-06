@@ -37,7 +37,7 @@ function wishlist_woocommerce_yith_wcwl_after_wishlist_form($wishlist){
 				var content = "";
 				
 				// header
-				content = "<table border=1><thead><tr><th>Id Usuario</th><th>Wishlist token</th><th>Id Producto</th><th>Nombre Prodcuto</th></tr></thead><tbody>";
+				content = "<table border=1><thead><tr><th>Id Usuario</th><th>Wishlist token</th><th>Id Producto</th><th>SKU</th><th>Nombre Prodcuto</th></tr></thead><tbody>";
 				
 				<?php
 					// products on wihslist
@@ -48,6 +48,7 @@ function wishlist_woocommerce_yith_wcwl_after_wishlist_form($wishlist){
 							. "<td>". htmlentities ( $wishlist->get_user_id() ) ."</td>" 
 							. "<td>". htmlentities ( $wishlist->get_token() ) ."</td>" 
 							. "<td>". htmlentities ( $product->get_id() ) ."</td>" 
+							. "<td>". htmlentities ( $product->get_sku() ) ."</td>" 
 							. "<td>". htmlentities ( $product->get_name() ) ."</td>" 
 						."</tr>';";
 
